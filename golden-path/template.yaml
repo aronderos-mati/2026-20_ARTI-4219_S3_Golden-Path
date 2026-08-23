@@ -48,7 +48,7 @@ spec:
           ui:autofocus: true
           ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
         owner:
-          title: "Propietario (Owner) -"
+          title: "Propietario (Owner)."
           type: string
           description: >
             El equipo o usuario responsable de este microservicio.
@@ -58,11 +58,9 @@ spec:
           # Pista: investiga 'ui:field: OwnerPicker' y sus opciones de catálogo.
           ui:field: OwnerPicker
           ui:options:
-            # Obliga a que el usuario elija una opción válida del catálogo
-            allowArbitraryValues: false
             # Filtra el catálogo para que solo muestre entidades de tipo 'Group' (Equipos)
             catalogFilter:
-              kind: ['Group', 'User']
+              kind: Group
 
   # =====================================================================
   # SECCIÓN STEPS: Define las acciones automatizadas del scaffolder.
