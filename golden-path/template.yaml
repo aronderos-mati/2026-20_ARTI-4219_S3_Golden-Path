@@ -56,10 +56,14 @@ spec:
           # TODO 3: Reemplaza el tipo de campo por el widget especial de Backstage
           # que lee los owners directamente del Software Catalog.
           # Pista: investiga 'ui:field: OwnerPicker' y sus opciones de catálogo.
-          ui:field: OwnerPicker
-          ui:options:
-            catalogFilter:
-              kind: ['Group', 'User']
+          
+          # Esta es la respuesta,  al renderizar no toma el listado del cótalogo,
+          # Sin embargo para que funcion el step publish-github el owner debe ser
+          # el usuario de git donde se va a almacenar el código del servicio
+          #ui:field: OwnerPicker
+          #ui:options:
+          #  catalogFilter:
+          #    kind: ['Group', 'User']
 
   # =====================================================================
   # SECCIÓN STEPS: Define las acciones automatizadas del scaffolder.
@@ -95,9 +99,18 @@ spec:
         description: Servicio ${{ parameters.serviceName }} en GitHub
         repoVisibility: private
         defaultBranch: main
-
         # TODO 9 (Avanzado/Opcional): ¿Cómo protegerías la rama 'main'
         # para que requiera Pull Requests antes de hacer merge?
+
+        # Habilita la protección en la rama por defecto (main)
+        protectDefaultBranch: true
+        # Requiere al menos 1 aprobación en el Pull Request antes del merge
+        requiredApprovingReviewCount: 1
+        # (Opcional) Aplica las reglas incluso para los administradores del repo
+        protectEnforceAdmins: true
+        # (Opcional) Requiere que los dueños del código (CODEOWNERS) aprueben el PR
+        requireCodeOwnerReviews: true
+
 
     # -------------------------------------------------------------------
     # PASO 3: Registrar el componente en el Software Catalog de Backstage.
