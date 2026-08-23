@@ -40,7 +40,7 @@ parameters:
         # TODO 2: Agrega las propiedades de JSON Schema para:
         #   a) Limitar el nombre a máximo 50 caracteres
         #   b) Validar que solo use letras minúsculas, números y guiones (-)
-        maxLength: 50
+        #maxLength: 50
         pattern: "^[a-z-]+$"
         ui:autofocus: true
         ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
