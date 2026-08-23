@@ -25,6 +25,9 @@ metadata:
 # =====================================================================
 # SECCIÓN PARAMETERS: Define el formulario que verá el desarrollador.
 # =====================================================================
+spec:
+  owner: user:guest # Requerido por Backstage para identificar al dueño del template
+  type: service     # Define el tipo de componente que este template creará
 parameters:
   - title: "Información del Microservicio"
     required:
@@ -40,11 +43,10 @@ parameters:
         # TODO 2: Agrega las propiedades de JSON Schema para:
         #   a) Limitar el nombre a máximo 50 caracteres
         #   b) Validar que solo use letras minúsculas, números y guiones (-)
-        #maxLength: 50
+        maxLength: 50
         pattern: "^[a-z-]+$"
         ui:autofocus: true
         ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
-
       owner:
         title: "Propietario (Owner)"
         type: string
