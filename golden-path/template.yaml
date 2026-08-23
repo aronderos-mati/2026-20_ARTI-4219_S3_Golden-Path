@@ -108,7 +108,7 @@ spec:
       input:
         # TODO 10: Define la URL del catalog-info.yaml que acaba de publicarse.
         # Para esto, necesitas usar el OUTPUT del paso anterior ('publish-github').
-        repoContentsUrl: ${{ steps['publish']..output.repoContentsUrl }}
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
   # =====================================================================
