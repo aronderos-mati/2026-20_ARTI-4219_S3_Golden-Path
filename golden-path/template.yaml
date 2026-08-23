@@ -8,8 +8,8 @@
 # =====================================================================
 
 # TODO 1: Completa los campos de apiVersion y kind.
-apiVersion: # TODO: ¿Cuál es el apiVersion correcto para un Template?
-kind: # TODO: ¿Cuál es el kind correcto para un Template?
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
 
 metadata:
   name: microservicio-nodejs
@@ -40,6 +40,8 @@ parameters:
         # TODO 2: Agrega las propiedades de JSON Schema para:
         #   a) Limitar el nombre a máximo 50 caracteres
         #   b) Validar que solo use letras minúsculas, números y guiones (-)
+        maxLength: 50
+        pattern: "^[a-z-]+$"
         ui:autofocus: true
         ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
 
@@ -52,6 +54,12 @@ parameters:
         # TODO 3: Reemplaza el tipo de campo por el widget especial de Backstage
         # que lee los owners directamente del Software Catalog.
         # Pista: investiga 'ui:field: OwnerPicker' y sus opciones de catálogo.
+        ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: 
+                - Group
+                - User
         ui:help: "Selecciona el equipo o usuario propietario del servicio"
 
 # =====================================================================
@@ -66,12 +74,13 @@ steps:
     action: fetch:template
     input:
       # TODO 5: Especifica la URL del repositorio que contiene el skeleton.
-      url: # TODO: pon aquí la URL de tu skeleton en GitHub
+      url: ./skeleton
       values:
         # TODO 6: Mapea aquí los parámetros del formulario a los valores
         # que usará el skeleton. ¿Cómo se referencia un parámetro del
         # formulario dentro de la sección 'steps'?
-
+        serviceName: ${{ parameters.serviceName }}
+        owner: ${{ parameters.owner }}
   # -------------------------------------------------------------------
   # PASO 2: Publicar el código en un repositorio de GitHub.
   # -------------------------------------------------------------------
@@ -82,9 +91,8 @@ steps:
       # TODO 7: Define el nombre del repositorio a crear en GitHub.
       # Usa el parámetro 'serviceName' para que el nombre del repo
       # coincida con el nombre del microservicio.
-      repoUrl: # TODO: construye la URL del repo con el nombre del servicio
-      description: # TODO: usa el parámetro serviceName para construir una descripción dinámica
-      # TODO 8: Define la visibilidad del repositorio.
+      repoUrl: github.com?repo=${{ parameters.serviceName }}&owner=${{ parameters.owner }}
+      description: Servicio ${{ parameters.serviceName }} en GitHub
       repoVisibility: private
       defaultBranch: main
 
@@ -100,7 +108,7 @@ steps:
     input:
       # TODO 10: Define la URL del catalog-info.yaml que acaba de publicarse.
       # Para esto, necesitas usar el OUTPUT del paso anterior ('publish-github').
-      repoContentsUrl: # TODO
+      repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
       catalogInfoPath: "/catalog-info.yaml"
 
 # =====================================================================
@@ -111,10 +119,10 @@ output:
   #   1. Un link al repositorio recién creado en GitHub
   #   2. Un link al componente en el Software Catalog de Backstage
   links:
-    - title: # TODO: Título del primer link (ej: "Ver repositorio en GitHub")
-      url: # TODO: URL del output del paso publish-github
+    - title: Link al repositorio en GitHub
+      url: ${{ steps['publish'].output.remoteUrl }}
       icon: github
 
-    - title: # TODO: Título del segundo link (ej: "Ver en el Software Catalog")
-      entityRef: # TODO: referencia la entity registrada en el catálogo
+    - title: Link al Software Catalog
+      entityRef: ${{ steps['register'].output.entityRef }}
       icon: catalog
