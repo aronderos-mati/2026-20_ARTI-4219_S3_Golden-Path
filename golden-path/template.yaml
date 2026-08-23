@@ -91,8 +91,8 @@ spec:
         # TODO 7: Define el nombre del repositorio a crear en GitHub.
         # Usa el parámetro 'serviceName' para que el nombre del repo
         # coincida con el nombre del microservicio.
-        #repoUrl: github.com?repo=${{ parameters.serviceName }}&owner=${{ parameters.owner }}
-        repoUrl: github.com?repo=${{ parameters.serviceName }}
+        repoUrl: github.com?repo=${{ parameters.serviceName }}&owner=${{ parameters.owner }}
+        #repoUrl: github.com?repo=${{ parameters.serviceName }}
         description: Servicio ${{ parameters.serviceName }} en GitHub
         repoVisibility: private
         defaultBranch: main
