@@ -48,7 +48,7 @@ spec:
           ui:autofocus: true
           ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
         owner:
-          title: "Propietario (Owner)-"
+          title: "Propietario (Owner)"
           type: string
           description: >
             El equipo o usuario responsable de este microservicio.
@@ -120,9 +120,9 @@ spec:
     #   2. Un link al componente en el Software Catalog de Backstage
     links:
       - title: Link al repositorio en GitHub
-        url: ${{ steps['publish'].output.remoteUrl }}
+        url: ${{ steps['publish-github'].output.remoteUrl }}
         icon: github
 
       - title: Link al Software Catalog
-        entityRef: ${{ steps['register'].output.entityRef }}
+        entityRef: ${{ steps['register-catalog'].output.entityRef }}
         icon: catalog
