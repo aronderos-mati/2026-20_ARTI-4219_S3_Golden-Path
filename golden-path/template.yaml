@@ -49,7 +49,7 @@ spec:
           ui:help: "Usa minúsculas, números y guiones. Ej: mi-nuevo-servicio"
         owner:
           title: "Propietario (Owner)"
-          type: string
+          #type: string
           description: >
             El equipo o usuario responsable de este microservicio.
             Debe ser una entidad válida del Software Catalog.
